@@ -1,0 +1,11 @@
+services:
+  ci-testes:
+    build: .
+    container_name: ci_testes_inteligentes_gismar
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: npm run test

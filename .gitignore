@@ -1,0 +1,19 @@
+# Dependências
+node_modules/
+
+# Ambiente
+.env
+
+# Relatórios e artefatos do Playwright
+playwright-report/
+test-results/
+blob-report/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operacional / editores
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,27 @@
+{
+  "name": "ci-testes-inteligentes-gismar",
+  "version": "1.0.0",
+  "description": "Projeto acadêmico para pipelines de CI com GitHub Actions, Playwright e testes com apoio de IA.",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server app -p 3000 -a 0.0.0.0",
+    "test": "playwright test",
+    "test:manual": "playwright test tests/manual",
+    "test:ia": "playwright test tests/ia",
+    "report": "playwright show-report --host 0.0.0.0"
+  },
+  "keywords": [
+    "ci",
+    "cd",
+    "github-actions",
+    "playwright",
+    "testes-automatizados",
+    "ia"
+  ],
+  "author": "Gismar",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "http-server": "^14.1.1"
+  }
+}
