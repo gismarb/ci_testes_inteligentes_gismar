@@ -1,0 +1,65 @@
+name: CI - Testes com IA Generativa
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  testes-ia:
+    name: Executar testes com apoio de IA generativa
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js com cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências do projeto
+        run: npm install
+
+      - name: Instalar navegadores do Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Executar testes com apoio de IA generativa
+        shell: bash
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          echo "Iniciando execução dos testes com apoio de IA generativa..."
+          npm run test:ia 2>&1 | tee logs/testes-ia.log
+          echo "PASSED - Testes com apoio de IA generativa executados com sucesso."
+
+      - name: Registrar falha dos testes com apoio de IA generativa
+        if: failure()
+        run: |
+          mkdir -p logs
+          echo "FAILED - A pipeline de testes com apoio de IA generativa falhou." | tee -a logs/testes-ia.log
+
+      - name: Publicar relatório HTML do Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-html-testes-ia
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Publicar artefatos de execução dos testes com IA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: artefatos-testes-ia
+          path: |
+            test-results/
+            logs/
+          retention-days: 7
